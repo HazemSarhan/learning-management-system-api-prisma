@@ -1,0 +1,513 @@
+openapi: 3.0.0
+info:
+  title: LMS - Prisma
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api/v1
+tags:
+  - name: Authentication
+  - name: Users
+  - name: Categories
+  - name: Courses
+  - name: Sections
+  - name: Lectures
+  - name: Reviews
+  - name: Orders
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register User
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: admin
+                email:
+                  type: string
+                  example: hazem@admin.com
+                password:
+                  type: string
+                  example: secret
+                bio:
+                  type: string
+                  example: this is bio
+                profile_picture:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: hazem@admin.com
+                password: secret
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/logout:
+    get:
+      tags:
+        - Authentication
+      summary: Logout User
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get All Users
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/82096795-7910-4719-bff2-12f5a1d7e68d:
+    get:
+      tags:
+        - Users
+      summary: Get Single User By Id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/updateUser:
+    patch:
+      tags:
+        - Users
+      summary: Update User Data
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: admin
+                email:
+                  type: string
+                  example: hazem@admin.com
+                password:
+                  type: string
+                  example: secret
+                bio:
+                  type: string
+                  example: this is updated bio
+                role:
+                  type: string
+                  example: ADMIN
+                profile_picture:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/updateUserPassword/:
+    patch:
+      tags:
+        - Users
+      summary: Update User Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                oldPassword: newSecret
+                newPassword: secret
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/12b15134-d34f-4121-a257-cc4ee8cc000b/role:
+    patch:
+      tags:
+        - Users
+      summary: Update User Role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                newRole: INSTRUCTOR
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /categories:
+    post:
+      tags:
+        - Categories
+      summary: Create Category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Web Development
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Categories
+      summary: Get All Categories
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /categories/b08bc59f-1a81-4609-8f71-ba292d107216:
+    get:
+      tags:
+        - Categories
+      summary: Get Category By Id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - Categories
+      summary: Update Category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Web Development | Updated
+                description: This is a web dev description
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Categories
+      summary: Delete Category
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /courses/:
+    post:
+      tags:
+        - Courses
+      summary: Create Course
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: 'Course #6'
+                description:
+                  type: string
+                  example: 'Course #6 Description Lorem Ipsum'
+                price:
+                  type: integer
+                  example: '99'
+                categoryId:
+                  type: string
+                  example: b08bc59f-1a81-4609-8f71-ba292d107216
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Courses
+      summary: Get All Courses
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /courses/986b3ee0-8e04-4683-a311-7706e72372ec:
+    get:
+      tags:
+        - Courses
+      summary: Get Course By Id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /courses/060a4be9-7937-444e-a251-962d5d793336:
+    patch:
+      tags:
+        - Courses
+      summary: Update Course
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Updated
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /courses/129f57c0-03df-43d6-98b5-23c8e41c36ec:
+    delete:
+      tags:
+        - Courses
+      summary: Delete Course
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /sections/:
+    post:
+      tags:
+        - Sections
+      summary: Create Section
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: 'section #2'
+                description: 'lorem ipsum for section #2 to link course #1'
+                courseId: 4c54af06-c20c-4840-bcb4-0d6335fc5f90
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Sections
+      summary: Get All Sections
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /sections/6053d25f-f6aa-4ac1-8ed0-bc454911a562:
+    get:
+      tags:
+        - Sections
+      summary: Get Section By Id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - Sections
+      summary: Update Section
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: 'section #1 | updated'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Sections
+      summary: Delete Section
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /lectures/:
+    post:
+      tags:
+        - Lectures
+      summary: Create Lecture
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: 'lecture #3'
+                sectionId:
+                  type: string
+                  example: c74168d5-9f5c-42ae-8057-5fd3dc26c2fe
+                content:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Lectures
+      summary: Get All Lectures
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /lectures/044f8182-d7ab-4c9f-9504-fc1e90502a40:
+    get:
+      tags:
+        - Lectures
+      summary: Get Lecture By Id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /lectures/a2a12600-6c6b-4d78-a800-3ad0d04281a6:
+    patch:
+      tags:
+        - Lectures
+      summary: Update Lecture
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: lecture updated
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Lectures
+      summary: Delete Lecture
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /reviews/:
+    post:
+      tags:
+        - Reviews
+      summary: Create Review
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                rating: 2
+                comment: this is normal course
+                courseId: 4c54af06-c20c-4840-bcb4-0d6335fc5f90
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /reviews/b7c3db64-99c0-4e60-8a16-1e6010c877c1:
+    patch:
+      tags:
+        - Reviews
+      summary: Update Review
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                rating: 3
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Reviews
+      summary: Delete Review
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /orders/create:
+    post:
+      tags:
+        - Orders
+      summary: Create Order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                courseId: 986b3ee0-8e04-4683-a311-7706e72372ec
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /orders/:
+    get:
+      tags:
+        - Orders
+      summary: Get All Orders
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
