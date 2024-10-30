@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  role Role @default(STUDENT)
+  bio String?
+  profile_picture String?
+  uploaded_courses Course[] @relation("InstructorCourses")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  reviews Review[]
+  orders Order[]
+}
+
+enum Role {
+  ADMIN
+  INSTRUCTOR
+  STUDENT
+}
+
+model Category {
+  id String @id @default(uuid())
+  name String
+  description String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  courses Course[] @relation("CategoryCourses")
+}
+
+model Course {
+  id String @id @default(uuid())
+  title String
+  description String?
+  price Float
+  is_paid Boolean? @default(true)
+  image String?
+  average_rating Float @default(0)
+  number_of_reviews Float @default(0)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  category Category @relation(fields: [categoryId], references: [id], name: "CategoryCourses")
+  categoryId String
+  instructor User @relation(fields: [instructorId], references: [id], name: "InstructorCourses")
+  instructorId String
+  sections Section[]
+  reviews Review[]
+  orders Order[]
+}
+
+model Section {
+  id String @id @default(uuid())
+  title String
+  description String?
+  course Course @relation(fields: [courseId], references: [id])
+  courseId String
+  lectures Lecture[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Lecture {
+  id String @id @default(uuid())
+  title String
+  content String[]
+  type String
+  section Section @relation(fields: [sectionId], references: [id])
+  sectionId String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Review {
+  id String @id @default(uuid())
+  rating Int
+  comment String
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  course Course @relation(fields: [courseId], references: [id])
+  courseId String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Order {
+  id String @id @default(uuid())
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  course Course @relation(fields: [courseId], references: [id])
+  courseId String
+  price Int
+  paymentStatus paymentStatusList @default(PENDING)
+  stripeSessionId String
+  purchased_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+enum paymentStatusList {
+  PENDING
+  COMPLETED
+  FAILED
+}
