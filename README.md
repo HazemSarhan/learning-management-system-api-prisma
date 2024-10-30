@@ -42,5 +42,7 @@ npm start
 
 2. Regsiter a new account, First account automaticly set to ADMIN
 
+3. Check docs for more info
+
 > [!NOTE]
 > Check the docs for all routes & data [LMS API Documentation](http://localhost:5000/api-docs/).
